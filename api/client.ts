@@ -1,8 +1,23 @@
-import type { Post } from "./types.ts";
+import type { Author, Post } from "../types/index.ts";
+
+const author: Author = { id: 1, name: "Hoan" };
+const commenter: Author = { id: 2, name: "An" };
 
 const mockPosts: Post[] = [
-  { id: 1, title: "Post 1", body: "Hôm nay trời đẹp" },
-  { id: 2, title: "Post 2", body: "Thứ 6 auto tắc đường" },
+  {
+    id: 1,
+    title: "Post 1",
+    body: "Hôm nay trời đẹp",
+    author,
+    comments: [{ id: 1, postId: 1, author: commenter, body: "Bài viết hay!" }],
+  },
+  {
+    id: 2,
+    title: "Post 2",
+    body: "Thứ 6 auto tắc đường",
+    author,
+    comments: [],
+  },
 ];
 
 function wait(ms: number, signal?: AbortSignal): Promise<void> {

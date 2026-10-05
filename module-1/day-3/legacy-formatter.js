@@ -1,0 +1,4 @@
+// Giả lập một thư viện JavaScript chưa đi kèm thông tin kiểu.
+export function formatTitle(title) {
+  return title.trim().toUpperCase();
+}
