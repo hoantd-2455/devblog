@@ -1,17 +1,16 @@
 // hạn chế spam click, chỉ chạy sau delay time
-function debounce(fn, delay) {
-  let timerId;
-
+function debounce(fn, delay, timerRef = { current: null }) {
   return function (...args) {
     // Hủy lịch chạy cũ, nếu có.
     // Tạo lịch chạy mới sau `delay` ms.
     // Khi đến giờ, gọi fn với args của lần gọi mới nhất.
 
-    if (timerId !== undefined) {
-      clearTimeout(timerId);
+    if (timerRef.current !== null) {
+      clearTimeout(timerRef.current);
     }
 
-    timerId = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
+      timerRef.current = null;
       fn.apply(this, args);
     }, delay);
   };
