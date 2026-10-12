@@ -49,3 +49,33 @@ a {
   padding: 1rem;
   border-bottom: 1px solid var(--foreground);
 }
+
+.post-skeleton {
+  padding: 12px;
+}
+.skeleton-card {
+  padding: 12px;
+  margin: 12px 0;
+}
+.skeleton-line {
+  height: 12px;
+  background: var(--foreground);
+  opacity: 0.15;
+  border-radius: 4px;
+  margin: 8px 0;
+  animation: skeleton-pulse 1s ease-in-out infinite alternate;
+}
+.skeleton-title {
+  width: 45%;
+  height: 20px;
+}
+@keyframes skeleton-pulse {
+  to {
+    opacity: 0.3;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-line {
+    animation: none;
+  }
+}

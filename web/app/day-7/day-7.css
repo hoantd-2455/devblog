@@ -1,0 +1,34 @@
+.day-7 {
+  width: min(960px, 100%);
+  margin: 0 auto;
+  padding: 24px;
+}
+.day-7 section {
+  margin: 24px 0;
+  padding: 16px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+}
+.day-7 label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px;
+}
+.day-7 button,
+.day-7 input,
+.day-7 select {
+  padding: 6px 10px;
+}
+.day-7 article {
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid currentColor;
+}
+.day-7 ul {
+  padding-left: 24px;
+}
+.large-list {
+  max-height: 260px;
+  overflow: auto;
+}

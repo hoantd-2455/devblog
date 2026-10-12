@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { AsyncState, Post } from "../../types";
 
-export function usePosts() {
+export function usePosts(initialPosts: Post[] = []) {
   const [state, setState] = useState<AsyncState<Post[]>>({
     status: "success",
-    data: [],
+    data: initialPosts,
   });
   const controllerRef = useRef<AbortController | null>(null);
 

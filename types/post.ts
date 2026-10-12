@@ -7,4 +7,5 @@ export interface Post {
   body: string;
   author: Author;
   comments: Comment[];
+  tags?: string[];
 }

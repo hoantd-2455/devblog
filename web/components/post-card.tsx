@@ -2,6 +2,7 @@
 
 import { memo } from "react";
 import type { Post } from "../../types/index";
+import LikeButton from "./like-button";
 
 type PostCardProps = {
   post: Post;
@@ -17,7 +18,9 @@ const PostCard = memo(function PostCard({ post, onUpdate }: PostCardProps) {
         <h2>{post.title}</h2>
         <p>{post.body}</p>
         <p>{post.author.name}</p>
+        <p>Tags: {(post.tags ?? []).join(", ")}</p>
         <button onClick={() => onUpdate(post.id)}>Sửa tiêu đề</button>
+        <LikeButton postId={post.id} />
       </article>
     </>
   );

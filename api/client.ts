@@ -10,6 +10,7 @@ const mockPosts: Post[] = [
     body: "Hôm nay trời đẹp",
     author,
     comments: [{ id: 1, postId: 1, author: commenter, body: "Bài viết hay!" }],
+    tags: ["react", "javascript"],
   },
   {
     id: 2,
@@ -17,6 +18,7 @@ const mockPosts: Post[] = [
     body: "Thứ 6 auto tắc đường",
     author,
     comments: [],
+    tags: ["nextjs"],
   },
 ];
 
