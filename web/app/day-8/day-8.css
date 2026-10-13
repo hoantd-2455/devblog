@@ -1,0 +1,33 @@
+.day-8 {
+  width: min(960px, 100%);
+  padding: 24px;
+  margin: auto;
+}
+.day-8 section {
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+}
+.day-8 label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px;
+}
+.day-8 button,
+.day-8 input,
+.day-8 select {
+  padding: 6px 10px;
+}
+.day-8 article {
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid currentColor;
+}
+.day-8 ul {
+  padding-left: 24px;
+}
+.day-8 a {
+  text-decoration: underline;
+}

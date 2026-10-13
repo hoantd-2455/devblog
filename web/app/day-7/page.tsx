@@ -4,6 +4,7 @@ import PostListSkeleton from "../../components/post-list-skeleton";
 import SuspenseDemo from "./suspense-demo";
 import TransitionDemo from "./transition-demo";
 import ActionFormDemo from "./action-form-demo";
+import OptimisticLikeDemo from "./optimistic-like-demo";
 import React192Demo from "./react-192-demo";
 import "./day-7.css";
 
@@ -38,6 +39,8 @@ export default function Day7Page() {
       <section>
         <h2>3. Form Actions + optimistic UI</h2>
         <ActionFormDemo />
+        <h3>Like cục bộ với useOptimistic (Day 7)</h3>
+        <OptimisticLikeDemo postId={1} />
       </section>
       <section>
         <h2>4. React 19.2: Effect Event và Activity</h2>

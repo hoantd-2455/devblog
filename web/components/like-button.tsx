@@ -1,49 +1,39 @@
 "use client";
-
-import {
-  startTransition,
-  useActionState,
-  useOptimistic,
-  useState,
-} from "react";
-import { simulateMutation } from "../lib/day-7-actions";
-
-export default function LikeButton({ postId }: { postId: number }) {
-  const [likes, setLikes] = useState(0);
-  const [optimisticLikes, addOptimisticLike] = useOptimistic(
-    likes,
-    (current, increment: number) => current + increment,
-  );
-
-  const [result, action, isPending] = useActionState(
-    async (_previous: { error: string | null }, formData: FormData) => {
-      addOptimisticLike(1);
-      try {
-        await simulateMutation(formData.get("fail") === "on");
-        // Sau await, đánh dấu cập nhật dữ liệu xác nhận là transition.
-        startTransition(() => setLikes((previous) => previous + 1));
-        return { error: null };
-      } catch (error) {
-        // Không cập nhật likes: khi Action kết thúc, optimistic tự trở về base.
-        return {
-          error: error instanceof Error ? error.message : "Lỗi lưu like",
-        };
-      }
-    },
-    { error: null },
-  );
-
+import { useState, type FormEvent } from "react";
+import { useLikePost } from "../hooks/use-post-mutations";
+export default function LikeButton({
+  postId,
+  likes,
+  disabled = false,
+}: {
+  postId: number;
+  likes: number;
+  disabled?: boolean;
+}) {
+  const [shouldFail, setShouldFail] = useState(false);
+  const mutation = useLikePost();
+  function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    mutation.mutate({ id: postId, shouldFail });
+  }
   return (
-    <form action={action} aria-label={`Like bài ${postId}`}>
-      <button type="submit" disabled={isPending}>
-        Like: {optimisticLikes}
+    <form onSubmit={submit} aria-label={`Like bài ${postId}`}>
+      <button disabled={disabled || mutation.isPending} type="submit">
+        Like: {likes}
       </button>
       <label>
-        <input type="checkbox" name="fail" disabled={isPending} /> Giả lập lỗi
-        like
+        <input
+          type="checkbox"
+          checked={shouldFail}
+          onChange={(event) => setShouldFail(event.target.checked)}
+          disabled={disabled || mutation.isPending}
+        />{" "}
+        Giả lập lỗi like
       </label>
-      {isPending && <span role="status">Đang lưu like...</span>}
-      {result.error && <p role="alert">{result.error}</p>}
+      {mutation.isPending && <span role="status">Đang lưu like...</span>}
+      {mutation.error && (
+        <p role="alert">{mutation.error.message} — Đã rollback cache.</p>
+      )}
     </form>
   );
 }

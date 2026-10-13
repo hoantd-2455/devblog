@@ -8,4 +8,5 @@ export interface Post {
   author: Author;
   comments: Comment[];
   tags?: string[];
+  likes?: number;
 }
