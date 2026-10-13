@@ -1,0 +1,45 @@
+.day-9 {
+  width: min(1000px, 100%);
+  margin: auto;
+  padding: 24px;
+}
+.day-9 section {
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+}
+.day-9 label {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin: 8px;
+}
+.day-9 button,
+.day-9 input,
+.day-9 select {
+  padding: 6px 10px;
+}
+.day-9 article {
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid currentColor;
+}
+.day-9 table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+.day-9 th,
+.day-9 td {
+  border: 1px solid currentColor;
+  padding: 8px;
+  text-align: left;
+}
+.day-9 pre {
+  white-space: pre-wrap;
+  margin: 16px 0;
+}
+.day-9 a {
+  text-decoration: underline;
+}

@@ -1,3 +1,4 @@
+import { normalizeFilters, type PostFilters } from "../../api/post-filters";
 import { queryOptions } from "@tanstack/react-query";
 import type { Post } from "../../types";
 export const postsKey = ["posts"] as const;
@@ -16,3 +17,19 @@ export const postsOptions = queryOptions({
   queryFn: ({ signal }) => getPosts(signal),
   staleTime: 30_000,
 });
+
+export function filteredPostsOptions(input: PostFilters) {
+  const filters = normalizeFilters(input);
+  return queryOptions({
+    queryKey: [...postsKey, "list", filters] as const,
+    queryFn: ({ signal }) => getFilteredPosts(filters, signal),
+    staleTime: 30_000,
+  });
+}
+async function getFilteredPosts(
+  filters: PostFilters,
+  signal?: AbortSignal,
+): Promise<Post[]> {
+  const params = new URLSearchParams(filters);
+  return readResponse<Post[]>(await fetch(`/api/posts?${params}`, { signal }));
+}

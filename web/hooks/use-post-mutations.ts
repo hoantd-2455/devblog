@@ -1,6 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { Post } from "../../types";
 import { postsKey, readResponse } from "../lib/posts-query";
+import {
+  snapshotPosts,
+  restorePosts,
+  appendOptimisticPost,
+  updateCachedPost,
+} from "../lib/post-cache";
 export const postsMutationKey = ["posts", "write"] as const;
 export function useAddPost() {
   const client = useQueryClient();
@@ -16,7 +22,7 @@ export function useAddPost() {
       ),
     onMutate: async (input) => {
       await client.cancelQueries({ queryKey: postsKey });
-      const previous = client.getQueryData<Post[]>(postsKey);
+      const previous = snapshotPosts(client);
       const temporaryId = -Date.now();
       const temporary: Post = {
         id: temporaryId,
@@ -27,16 +33,14 @@ export function useAddPost() {
         tags: ["react"],
         likes: 0,
       };
-      client.setQueryData<Post[]>(postsKey, (old = []) => [...old, temporary]);
+      appendOptimisticPost(client, temporary);
       return { previous, temporaryId };
     },
     onError: (_error, _input, context) => {
-      if (context) client.setQueryData(postsKey, context.previous ?? []);
+      if (context) restorePosts(client, context.previous);
     },
     onSuccess: (post, _input, context) => {
-      client.setQueryData<Post[]>(postsKey, (old = []) =>
-        old.map((item) => (item.id === context.temporaryId ? post : item)),
-      );
+      updateCachedPost(client, context.temporaryId, () => post);
       // Trả Promise để pending kéo dài đến khi refetch hoàn thành.
       return client.invalidateQueries({ queryKey: postsKey });
     },
@@ -56,23 +60,18 @@ export function useLikePost() {
       ),
     onMutate: async (input) => {
       await client.cancelQueries({ queryKey: postsKey });
-      const previous = client.getQueryData<Post[]>(postsKey);
-      client.setQueryData<Post[]>(postsKey, (old = []) =>
-        old.map((post) =>
-          post.id === input.id
-            ? { ...post, likes: (post.likes ?? 0) + 1 }
-            : post,
-        ),
-      );
+      const previous = snapshotPosts(client);
+      updateCachedPost(client, input.id, (post) => ({
+        ...post,
+        likes: (post.likes ?? 0) + 1,
+      }));
       return { previous };
     },
     onError: (_error, _input, context) => {
-      if (context) client.setQueryData(postsKey, context.previous ?? []);
+      if (context) restorePosts(client, context.previous);
     },
     onSuccess: (updated) => {
-      client.setQueryData<Post[]>(postsKey, (old = []) =>
-        old.map((post) => (post.id === updated.id ? updated : post)),
-      );
+      updateCachedPost(client, updated.id, () => updated);
       return client.invalidateQueries({ queryKey: postsKey });
     },
   });

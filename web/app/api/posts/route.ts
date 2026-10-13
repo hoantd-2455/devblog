@@ -1,6 +1,15 @@
+import { matchesPostFilters } from "../../../../api/post-filters";
 import { createPost, fetchPosts } from "../../../../api/client";
 export async function GET(request: Request) {
-  return Response.json(await fetchPosts(request.signal));
+  const params = new URL(request.url).searchParams;
+  const filters = {
+    tag: params.get("tag") ?? "all",
+    query: params.get("query") ?? "",
+  };
+  const posts = await fetchPosts(request.signal);
+  return Response.json(
+    posts.filter((post) => matchesPostFilters(post, filters)),
+  );
 }
 export async function POST(request: Request) {
   const input: unknown = await request.json().catch(() => null);
