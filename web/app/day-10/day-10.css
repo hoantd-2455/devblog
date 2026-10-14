@@ -1,0 +1,33 @@
+.day-10 {
+  width: min(960px, 100%);
+  margin: auto;
+  padding: 24px;
+}
+.day-10 header {
+  padding-bottom: 16px;
+  border-bottom: 1px solid currentColor;
+  margin-bottom: 20px;
+}
+.day-10 nav {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+.day-10 a {
+  text-decoration: underline;
+}
+.day-10 button {
+  padding: 6px 10px;
+}
+.day-10 section {
+  margin: 20px 0;
+}
+.wide-card {
+  padding: 16px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+}
+.wide-card p {
+  margin: 8px 0;
+}

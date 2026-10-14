@@ -1,0 +1,23 @@
+.card {
+  padding: 16px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+.card h2 {
+  margin-bottom: 8px;
+}
+.card p {
+  margin: 8px 0;
+}
+.card a {
+  text-decoration: underline;
+}
+.card button {
+  padding: 6px 10px;
+}
+.card label {
+  display: inline-flex;
+  gap: 8px;
+  margin-left: 12px;
+}
